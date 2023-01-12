@@ -35,7 +35,7 @@ def make_peer(lines, peers):
         if v.startswith('wg set wg0 peer'):
             for p in peers:
                 buf = re.sub('ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA=', p, v)
-                buf = re.sub('198.19.0.2/32', '198.19.0.' + num + '/32', buf)
+                buf = re.sub('198.19.0.2/32', '198.19.0.{}/32'.format(num), buf)
                 num += 1
                 yield buf
         else:
