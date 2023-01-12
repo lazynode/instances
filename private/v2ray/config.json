@@ -1,0 +1,9 @@
+{
+    "inbounds": [{
+        "port": 80,
+        "protocol": "vmess",
+        "settings": { "clients": [{ "id": "deaddead-dead-dead-dead-deaddeaddead" }]},
+        "streamSettings": { "network": "ws", "wsSettings": { "path": "/lazywebsocketpath" } }
+    }],
+    "outbounds": [{ "protocol": "freedom" }]
+}
