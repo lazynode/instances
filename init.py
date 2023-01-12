@@ -30,13 +30,11 @@ def gen_peer():
     return pk
 
 def make_peer(lines, peers):
-    num = 2
     for v in lines:
         if v.startswith('wg set wg0 peer'):
-            for p in peers:
+            for (n, p) in enumerate(peers):
                 buf = re.sub('ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA=', p, v)
-                buf = re.sub('198.19.0.2/32', '198.19.0.{}/32'.format(num), buf)
-                num += 1
+                buf = re.sub('198.19.0.2/32', '198.19.0.{}/32'.format(n+2), buf)
                 yield buf
         else:
             yield v
@@ -83,3 +81,13 @@ if __name__ == '__main__':
     buf = ''.join(make_peer(buf, peers))
     with open('private/wireguard/init', 'w') as f:
         f.write(buf)
+    for v in uuids:
+        print('V2RAY UUID:', v)
+    for (sk, pk) in skpk:
+        if sk == wgsk:
+            wgpk = pk
+    for (n, p) in enumerate(peers):
+        for (sk, pk) in skpk:
+            if p == pk:
+                print('WG:', 'SK:', sk, 'IP:', '198.19.0.{}'.format(n+2),'PEER:', wgpk)
+
