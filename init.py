@@ -82,7 +82,7 @@ if __name__ == '__main__':
     with open('private/wireguard/init', 'w') as f:
         f.write(buf)
     for v in uuids:
-        print('V2RAY UUID:', v)
+        print('V2RAY UUID:', v, 'PATH:', wspath)
     for (sk, pk) in skpk:
         if sk == wgsk:
             wgpk = pk
