@@ -30,10 +30,14 @@ def gen_peer():
     return pk
 
 def make_peer(lines, peers):
+    num = 2
     for v in lines:
         if v.startswith('wg set wg0 peer'):
             for p in peers:
-                yield v
+                buf = re.sub('ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA=', p, v)
+                buf = re.sub('198.19.0.2/32', '198.19.0.' + num + '/32', buf)
+                num++
+                yield buf
         else:
             yield v
 
@@ -74,5 +78,5 @@ if __name__ == '__main__':
         f.write(wgsk)
     with open('private/wireguard/init', 'r') as f:
         buf = f.readlines()
-    buf = '\n'.join(make_peer(buf, peers))
+    buf = ''.join(make_peer(buf, peers))
     print(buf)
