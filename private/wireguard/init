@@ -1,0 +1,8 @@
+ip link add dev wg0 type wireguard
+ip address add dev wg0 198.19.0.1/24
+wg set wg0 listen-port 51820 private-key /root/sk
+wg set wg0 peer AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= allowed-ips 198.19.0.2/32
+ip link set up dev wg0
+nft add table ip nat
+nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100\; policy accept\; }
+nft add rule ip nat POSTROUTING oifname "eth*" counter masquerade

@@ -1,0 +1,59 @@
+networks:
+  main:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 198.18.0.0/24
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:alpine-slim
+    command: sh -c 'crond && nginx -g "daemon off;"'
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 198.18.0.2
+    ports:
+      - 443:443
+    volumes:
+      - ./private/nginx/conf.d:/etc/nginx/conf.d
+      - ./private/nginx/reload:/etc/periodic/15min/reload
+      - ./public/certificate:/etc/letsencrypt
+  certbot:
+    container_name: certbot
+    image: lazynode/certbot
+    command: run.sh
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      main:
+        ipv4_address: 198.18.0.3
+    volumes:
+      - ./private/certbot/run.sh:/usr/bin/run.sh
+      - ./public/certificate:/etc/letsencrypt
+  wireguard:
+    container_name: wireguard
+    image: lazynode/wireguard
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.forwarding=1
+    networks:
+      main:
+        ipv4_address: 198.18.0.4
+    volumes:
+      - ./private/wireguard/init:/root/init
+      - ./private/wireguard/sk:/root/sk
+  v2ray:
+    container_name: v2ray
+    image: lazynode/v2ray
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 198.18.0.5
+    volumes:
+      - ./private/v2ray/config.json:/etc/v2ray/config.json
+
