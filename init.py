@@ -62,3 +62,5 @@ if __name__ == '__main__':
     buf['inbounds'][0]['streamSettings']['wsSettings']['path'] = wspath
     with open('private/v2ray/config.json', 'w') as f:
         json.dump(buf, f, indent = 4)
+    with open('private/wireguard/sk', 'w') as f:
+        f.write(wgsk)
