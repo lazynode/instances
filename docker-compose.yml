@@ -11,8 +11,7 @@ services:
     command: sh -c 'crond && nginx -g "daemon off;"'
     restart: unless-stopped
     networks:
-      main:
-        ipv4_address: 198.18.0.2
+      - main
     ports:
       - 443:443
     volumes:
@@ -27,8 +26,7 @@ services:
     ports:
       - 80:80
     networks:
-      main:
-        ipv4_address: 198.18.0.3
+      - main
     volumes:
       - ./private/certbot/run.sh:/usr/bin/run.sh
       - ./public/certificate:/etc/letsencrypt
@@ -42,8 +40,7 @@ services:
       - net.ipv4.ip_forward=1
       - net.ipv6.conf.all.forwarding=1
     networks:
-      main:
-        ipv4_address: 198.18.0.4
+      - main
     volumes:
       - ./private/wireguard/init:/root/init
       - ./private/wireguard/sk:/root/sk
@@ -52,8 +49,7 @@ services:
     image: lazynode/v2ray
     restart: unless-stopped
     networks:
-      main:
-        ipv4_address: 198.18.0.5
+      - main
     volumes:
       - ./private/v2ray/config.json:/etc/v2ray/config.json
 
