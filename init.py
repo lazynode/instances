@@ -29,6 +29,14 @@ def gen_peer():
     skpk.append((sk,pk))
     return pk
 
+def make_peer(lines, peers):
+    for v in lines:
+        if v.startswith('wg set wg0 peer'):
+            for p in peers:
+                yield v
+        else:
+            yield v
+
 if __name__ == '__main__':
     domain = os.environ['DOMAIN']
     email = os.environ.get('EMAIL', 'email@example.com')
@@ -66,4 +74,5 @@ if __name__ == '__main__':
         f.write(wgsk)
     with open('private/wireguard/init', 'r') as f:
         buf = f.readlines()
+    buf = '\n'.join(make_peer(buf, peers))
     print(buf)
