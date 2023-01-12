@@ -64,3 +64,6 @@ if __name__ == '__main__':
         json.dump(buf, f, indent = 4)
     with open('private/wireguard/sk', 'w') as f:
         f.write(wgsk)
+    with open('private/wireguard/init', 'r') as f:
+        buf = f.readlines()
+    print(buf)
