@@ -8,7 +8,7 @@ import subprocess
 skpk = []
 
 def gen_wspath():
-    return str(uuid.uuid4())
+    return '/' + str(uuid.uuid4())
 
 def gen_uuid():
     return str(uuid.uuid4())
@@ -53,6 +53,7 @@ if __name__ == '__main__':
     with open('private/nginx/conf.d/v2ray.conf', 'r') as f:
         buf = f.read()
     buf = re.sub('domain.example.com', domain, buf)
+    buf = re.sub('/lazywebsocketpath', wspath, buf)
     with open('private/nginx/conf.d/v2ray.conf', 'w') as f:
         f.write(buf)
     with open('private/v2ray/config.json', 'r') as f:
