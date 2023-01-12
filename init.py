@@ -36,7 +36,7 @@ def make_peer(lines, peers):
             for p in peers:
                 buf = re.sub('ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA=', p, v)
                 buf = re.sub('198.19.0.2/32', '198.19.0.' + num + '/32', buf)
-                num++
+                num += 1
                 yield buf
         else:
             yield v
