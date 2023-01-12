@@ -2,6 +2,7 @@
 import os
 import re
 import uuid
+import json
 import subprocess
 
 skpk = []
@@ -49,3 +50,14 @@ if __name__ == '__main__':
     buf = re.sub('domain.example.com', domain, buf)
     with open('private/certbot/run.sh', 'w') as f:
         f.write(buf)
+    with open('private/nginx/conf.d/v2ray.conf', 'r') as f:
+        buf = f.read()
+    buf = re.sub('domain.example.com', domain, buf)
+    with open('private/nginx/conf.d/v2ray.conf', 'w') as f:
+        f.write(buf)
+    with open('private/v2ray/config.json', 'r') as f:
+        buf = json.load(f)
+    buf['inbounds'][0]['settings']['clients'] = [{'id': v} for v in uuids]
+    buf['inbounds'][0]['streamSettings']['wsSettings']['path'] = wspath
+    with open('private/v2ray/config.json', 'w') as f:
+        json.dump(buf, f, indent = 4)
