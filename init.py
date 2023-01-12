@@ -56,6 +56,8 @@ if __name__ == '__main__':
         peers = [gen_peer() for i in range(int(peers))]
     else:
         peers = peers.split(',')
+    assert len(uuids) < 128
+    assert len(peers) < 128
     with open('private/certbot/run.sh', 'r') as f:
         buf = f.read()
     buf = re.sub('email@example.com', email, buf)
