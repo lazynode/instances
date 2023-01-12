@@ -16,7 +16,7 @@ services:
       - 443:443
     volumes:
       - ./private/nginx/conf.d:/etc/nginx/conf.d
-      - ./private/nginx/reload:/etc/periodic/15min/reload
+      - ./private/nginx/reload:/etc/periodic/daily/reload
       - ./public/certificate:/etc/letsencrypt
   certbot:
     container_name: certbot
