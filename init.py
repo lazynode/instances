@@ -79,4 +79,5 @@ if __name__ == '__main__':
     with open('private/wireguard/init', 'r') as f:
         buf = f.readlines()
     buf = ''.join(make_peer(buf, peers))
-    print(buf)
+    with open('private/wireguard/init', 'w') as f:
+        f.write(buf)
