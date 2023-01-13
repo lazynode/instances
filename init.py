@@ -14,16 +14,16 @@ def gen_uuid():
     return str(uuid.uuid4())
 
 def gen_wgsk():
-    sk = subprocess.run('docker --rm run lazynode/wireguard wg genkey', shell=True, check=True, capture_output=True).stdout
-    pk = subprocess.run('docker --rm run -i lazynode/wireguard wg pubkey', shell=True, check=True, capture_output=True, input=sk).stdout
+    sk = subprocess.run('docker run --rm lazynode/wireguard wg genkey', shell=True, check=True, capture_output=True).stdout
+    pk = subprocess.run('docker run --rm -i lazynode/wireguard wg pubkey', shell=True, check=True, capture_output=True, input=sk).stdout
     sk = sk.strip().decode()
     pk = pk.strip().decode()
     skpk.append((sk,pk))
     return sk
 
 def gen_peer():
-    sk = subprocess.run('docker --rm run lazynode/wireguard wg genkey', shell=True, check=True, capture_output=True).stdout
-    pk = subprocess.run('docker --rm run -i lazynode/wireguard wg pubkey', shell=True, check=True, capture_output=True, input=sk).stdout
+    sk = subprocess.run('docker run --rm lazynode/wireguard wg genkey', shell=True, check=True, capture_output=True).stdout
+    pk = subprocess.run('docker run --rm -i lazynode/wireguard wg pubkey', shell=True, check=True, capture_output=True, input=sk).stdout
     sk = sk.strip().decode()
     pk = pk.strip().decode()
     skpk.append((sk,pk))
