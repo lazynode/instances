@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+set -x
+DIR=${DIR:-workspace-$(uuidgen)}
+BRANCH=${BRANCH:-lazygate}
+git clone -b $BRANCH https://github.com/lazynode/instances.git $DIR
+cd $DIR
+umask 077
+./init.py > init.log
+echo "see $DIR/init.log for credentials"
+docker-compose up -d
