@@ -8,4 +8,4 @@ cd $DIR
 umask 077
 ./init.py > init.log
 echo "see $DIR/init.log for credentials"
-docker-compose up -d
+docker compose up -d
